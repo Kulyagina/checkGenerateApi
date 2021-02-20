@@ -1,0 +1,95 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "EACQ-M4M API",
+    "description": "Описание протокола M4M (версия 0)",
+    "contact": {
+      "email": "eacq-dev@tinkoff.ru"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://virtserver.swaggerhub.com/r9566/m4m/1.0.0",
+      "description": "SwaggerHub API Auto Mocking"
+    },
+    {
+      "url": "/v0",
+      "description": "EACQ-M4M API"
+    }
+  ],
+  "tags": [
+    {
+      "name": "requestor",
+      "description": "Управление отправителями"
+    }
+  ],
+  "paths": {
+    "/requestor/check": {
+      "post": {
+        "tags": [
+          "requestor"
+        ],
+        "summary": "Проверка статуса отправителя",
+        "description": "Проверяет состояние requestor по его коду\n",
+        "operationId": "requestorCheck",
+        "requestBody": {
+          "description": "Уникальный код отправителя",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestorCode"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Отправитель активен"
+          },
+          "400": {
+            "description": "Неправильно сформировано тело запроса"
+          },
+          "401": {
+            "description": "Запрос неавторизован"
+          },
+          "404": {
+            "description": "Оправитель не найден"
+          },
+          "410": {
+            "description": "Отправитель помечен на удаление"
+          },
+          "423": {
+            "description": "Родитель создаваемого субОтправителя заблокирован (приостановлен)"
+          },
+          "429": {
+            "description": "Превышен лимит на обращения к сервису"
+          },
+          "500": {
+            "description": "Ошибка приложения или БД"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "RequestorCode": {
+        "required": [
+          "code"
+        ],
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string",
+            "example": "2-uudnf4"
+          }
+        }
+      }
+    }
+  }
+}
